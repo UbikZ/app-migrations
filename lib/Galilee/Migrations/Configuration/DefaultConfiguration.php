@@ -78,7 +78,7 @@ class DefaultConfiguration
      */
     public function registerMigrationsFromDirectory($path)
     {
-        $files = glob(rtrim(realpath($path, '/')).'/Version*.php');
+        $files = glob(rtrim(realpath($path), '/').'/Version*.php');
         $versions = array();
         if ($files && is_array($files)) {
             foreach ($files as $file) {
@@ -179,11 +179,13 @@ class DefaultConfiguration
     /**
      * @return array
      */
-    public function getAvaiblableVersions()
+    public function getAvailableVersions()
     {
         $availableVersion = array();
-        foreach ($this->getMigrationsList() as $migration) {
-            $availableVersion[] = $migration->getVersion();
+        if (is_array($this->getMigrationsList())) {
+            foreach ($this->getMigrationsList() as $migration) {
+                $availableVersion[] = $migration->getVersion();
+            }
         }
 
         return $availableVersion;
@@ -207,7 +209,7 @@ class DefaultConfiguration
         $intersect = array_intersect($versions, $migratedVersions);
         $intersect = count($intersect) > 0 ? $intersect : $versions;
 
-        return is_array($intersect) ? sprintf('%s', max($intersect)) : '0';
+        return (is_array($intersect) && count($intersect) > 0) ? sprintf('%s', max($intersect)) : '0';
     }
 
     /**
@@ -231,8 +233,11 @@ class DefaultConfiguration
      */
     public function getLatestVersion()
     {
-        $versions = array_keys($this->getMigrationsList());
-        $latest = end($versions);
+        $latest = false;
+        if (is_array($this->getMigrationsList())) {
+            $versions = array_keys($this->getMigrationsList());
+            $latest = end($versions);
+        }
 
         return $latest !== false ? (string) $latest : '0';
     }
@@ -252,6 +257,61 @@ class DefaultConfiguration
         }
 
         return (string) $versions[$offset + $delta];
+    }
+
+    /**
+     * @param $direction
+     * @param $to
+     * @return array
+     */
+    public function getMigrationsToExecute($direction, $to)
+    {
+        if ($direction === 'down') {
+            if (count($this->getMigrationsList())) {
+                $allVersions = array_reverse(array_keys($this->getMigrationsList()));
+                $classes = array_reverse(array_values($this->getMigrationsList()));
+                $allVersions = array_combine($allVersions, $classes);
+            } else {
+                $allVersions = array();
+            }
+        } else {
+            $allVersions = $this->getMigrationsList();
+        }
+        $versions = array();
+        $migrated = $this->getMigratedVersions();
+        if (is_array($allVersions)) {
+            /** @var Version $version */
+            foreach ($allVersions as $version) {
+                if ($this->shouldExecuteMigration($direction, $version, $to, $migrated)) {
+                    $versions[$version->getVersion()] = $version;
+                }
+            }
+        }
+
+        return $versions;
+    }
+
+    /**
+     * @param $direction
+     * @param Version $version
+     * @param $to
+     * @param $migrated
+     * @return bool
+     */
+    private function shouldExecuteMigration($direction, Version $version, $to, $migrated)
+    {
+        if ($direction === 'down') {
+            if ( ! in_array($version->getVersion(), $migrated)) {
+                return false;
+            }
+            return $version->getVersion() > $to;
+        }
+        if ($direction === 'up') {
+            if (in_array($version->getVersion(), $migrated)) {
+                return false;
+            }
+            return $version->getVersion() <= $to;
+        }
     }
 
     /**
@@ -318,7 +378,7 @@ class DefaultConfiguration
             throw new InvalidMigrationsFileException('Cannot parse `'.$filePath.'` file migrations.');
         }
 
-        return $decodedContent;
+        return is_array($decodedContent) ?: array();
     }
 
     /**

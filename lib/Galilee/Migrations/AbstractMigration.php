@@ -38,6 +38,22 @@ abstract class AbstractMigration
         $this->getOutputWriter()->write($message);
     }
 
+    public function preUp(/* Mon ORM */)
+    {
+    }
+
+    public function postUp(/* Mon ORM */)
+    {
+    }
+
+    public function preDown(/* Mon ORM */)
+    {
+    }
+
+    public function postDown(/* Mon ORM */)
+    {
+    }
+
     /*
      *  Getters / Setters
      */

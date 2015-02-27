@@ -74,12 +74,65 @@ class Version
     }
 
     /**
-     * @param $direction
-     * @param bool $dryRun
+     * @return string
      */
-    public function execute($direction, $dryRun = false)
+    public function getExecutionState()
     {
-        // to be implemented
+        switch ($this->state) {
+            case self::STATE_PRE:
+                return 'Pre-Checks';
+            case self::STATE_POST:
+                return 'Post-Checks';
+            case self::STATE_EXEC:
+                return 'Execution';
+            default:
+                return 'No State';
+        }
+    }
+
+    /**
+     * @param $direction
+     * @throws \Exception
+     */
+    public function execute($direction)
+    {
+        try {
+            $start = microtime(true);
+            $this->setState(self::STATE_PRE);
+            $this->getMigration()->{'pre' . ucfirst($direction)}();
+            if ($direction === 'up') {
+                $this->getOutputWriter()->write("\n" . sprintf('  <info>++</info> migrating <comment>%s</comment>', $this->version) . "\n");
+            } else {
+                $this->getOutputWriter()->write("\n" . sprintf('  <info>--</info> reverting <comment>%s</comment>', $this->version) . "\n");
+            }
+            $this->setState(self::STATE_EXEC);
+            $this->getMigration()->$direction();
+            $this->getOutputWriter()->write('    <comment>-></comment> Executing...');
+            if ($direction === 'up') {
+                $this->markMigrated();
+            } else {
+                $this->markNotMigrated();
+            }
+
+            $this->setState(self::STATE_POST);
+            $this->getMigration()->{'post' . ucfirst($direction)}();
+            $end = microtime(true);
+            $this->setExecuteTime(round($end - $start, 2));
+            if ($direction === 'up') {
+                $this->getOutputWriter()->write(sprintf("\n  <info>++</info> migrated (%ss)", $this->getExecuteTime()));
+            } else {
+                $this->getOutputWriter()->write(sprintf("\n  <info>--</info> reverted (%ss)", $this->getExecuteTime()));
+            }
+            $this->setState(self::STATE_NONE);
+            return true;
+        } catch (\Exception $e) {
+            $this->getOutputWriter()->write(sprintf(
+                '<error>Migration %s failed during %s. Error %s</error>',
+                $this->version, $this->getExecutionState(), $e->getMessage()
+            ));
+            $this->state = self::STATE_NONE;
+            throw $e;
+        }
     }
 
     /*

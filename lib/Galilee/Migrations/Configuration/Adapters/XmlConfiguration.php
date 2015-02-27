@@ -29,6 +29,12 @@ class XmlConfiguration extends AbstractFileConfiguration
         }
         if (isset($xml->{'migrations-directory'})) {
             $conf->setMigrationsDirectory((string) $xml->{'migrations-directory'});
+            $conf->registerMigrationsFromDirectory($conf->getMigrationsDirectory());
+        }
+        if (isset($xml->migrations->migration)) {
+            foreach ($xml->migrations->migration as $migration) {
+                $conf->registerMigration((string) $migration['version'], (string) $migration['class']);
+            }
         }
     }
 }

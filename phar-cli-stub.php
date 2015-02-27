@@ -16,7 +16,8 @@ $cli = new \Symfony\Component\Console\Application('Application Migrations', '0.0
 $cli->setCatchExceptions(true);
 $cli->setHelperSet($helperSet);
 $cli->addCommands(array(
-    new \Galilee\Migrations\Console\Command\GenerateCommand()
+    new \Galilee\Migrations\Console\Command\GenerateCommand(),
+    new \Galilee\Migrations\Console\Command\MigrateCommand(),
 ));
 $cli->run();
 

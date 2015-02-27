@@ -69,7 +69,7 @@ class GenerateCommand extends AbstractCommand
         }
 
         if (false === @file_put_contents($path, $code)) {
-            throw new InvalidMigrationsFileException('Cannot create template i`'.$path.'` file migrations.');
+            throw new InvalidMigrationsFileException('Cannot create template `'.$path.'` file migrations.');
         }
 
         return $path;
