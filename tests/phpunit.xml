@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<phpunit bootstrap="./bootstrap.php"
+         colors="true"
+         convertErrorsToExceptions="true"
+         convertNoticesToExceptions="true"
+         convertWarningsToExceptions="true"
+         stopOnFailure="false"
+         syntaxCheck="true"
+         testSuiteLoaderClass="PHPUnit_Runner_StandardTestSuiteLoader">
+    <testsuite name="Application Migrations Test Suite">
+        <directory sufix="Test.php">./Galilee/Migrations/Tests/</directory>
+    </testsuite>
+</phpunit>

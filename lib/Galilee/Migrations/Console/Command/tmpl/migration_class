@@ -1,0 +1,21 @@
+<?php
+    namespace <namespace>;
+
+    use Galilee\Migrations\AbstractMigration;
+    <uses>
+
+    /**
+     * Auto-generated Migration: Please modify to your needs!
+     */
+
+    class Version<version> extends AbstractMigration
+    {
+        public function up(/* Mon ORM */)
+        {
+            // this up() migration is auto-generated, please modify it to your needs
+        }
+        public function down(/* Mon ORM */)
+        {
+            // this down() migration is auto-generated, please modify it to your needs
+        }
+    }

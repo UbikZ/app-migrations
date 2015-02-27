@@ -1,0 +1,13 @@
+<xml>
+    <name>Application Name</name>
+    <file>
+        <name>mon_fichier_versions</name>
+    </file>
+    <migrations-namespace>caca</migrations-namespace>
+    <uses>
+        <use></use>
+        <use></use>
+        <use></use>
+    </uses>
+    <migrations-directory>./build/</migrations-directory>
+</xml>
