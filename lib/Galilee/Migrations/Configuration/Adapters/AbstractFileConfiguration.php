@@ -27,8 +27,9 @@ abstract class AbstractFileConfiguration implements InterfaceFileConfiguration
     }
 
     /**
-     * @param  DefaultConfiguration $conf
+     * @param DefaultConfiguration $conf
      * @param $file
+     *
      * @return mixed
      */
     abstract public function extract(DefaultConfiguration &$conf, $file);

@@ -30,8 +30,8 @@ class Migration
         $to = (string) $to;
 
         $migrations = $this->configuration->getMigrationsList();
-        if ( ! isset($migrations[$to]) && $to > 0) {
-            throw new InvalidMigrationsVersionException('Try to migrate to a not found version `' . $to . '`.');
+        if (! isset($migrations[$to]) && $to > 0) {
+            throw new InvalidMigrationsVersionException('Try to migrate to a not found version `'.$to.'`.');
         }
         $direction = $from > $to ? 'down' : 'up';
         $migrationsToExecute = $this->configuration->getMigrationsToExecute($direction, $to);
@@ -55,6 +55,7 @@ class Migration
         $this->outputWriter->write(sprintf("  <info>++</info> finished in %s", $time));
         $this->outputWriter->write(sprintf("  <info>++</info> %s migrations executed", count($migrationsToExecute)));
         $this->outputWriter->write(sprintf("  <info>++</info> %s sql queries", count($sql, true) - count($sql)));
+
         return $sql;
     }
 

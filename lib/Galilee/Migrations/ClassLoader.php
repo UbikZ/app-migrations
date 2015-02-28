@@ -3,8 +3,7 @@
 namespace Galilee\Migrations;
 
 /**
- * Class ClassLoader
- * @package Galilee\Migrations
+ * Class ClassLoader.
  */
 class ClassLoader
 {
@@ -96,6 +95,7 @@ class ClassLoader
 
     /**
      * @param $className
+     *
      * @return bool
      */
     public function loadClass($className)
@@ -106,7 +106,7 @@ class ClassLoader
         if (!$this->canLoadClass($className)) {
             return false;
         }
-        require ($this->includePath !== null ? $this->includePath.DIRECTORY_SEPARATOR : '')
+        require($this->includePath !== null ? $this->includePath.DIRECTORY_SEPARATOR : '')
             .str_replace($this->namespaceSeparator, DIRECTORY_SEPARATOR, $className)
             .$this->fileExtension;
 
@@ -115,6 +115,7 @@ class ClassLoader
 
     /**
      * @param $className
+     *
      * @return bool
      */
     public function canLoadClass($className)
@@ -132,6 +133,7 @@ class ClassLoader
 
     /**
      * @param $className
+     *
      * @return bool
      */
     public static function classExists($className)
@@ -141,6 +143,7 @@ class ClassLoader
 
     /**
      * @param $className
+     *
      * @return mixed|null
      */
     public static function getClassLoader($className)
@@ -155,12 +158,13 @@ class ClassLoader
             }
         }
 
-        return null;
+        return;
     }
 
     /**
      * @param $type
-     * @param  bool $autoload
+     * @param bool $autoload
+     *
      * @return bool
      */
     private static function typeExists($type, $autoload = false)

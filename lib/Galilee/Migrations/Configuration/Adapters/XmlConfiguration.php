@@ -5,14 +5,14 @@ namespace Galilee\Migrations\Configuration\Adapters;
 use Galilee\Migrations\Configuration\DefaultConfiguration;
 
 /**
- * Class XmlConfiguration
- * @package Galilee\Migrations\Configuration\Adapters
+ * Class XmlConfiguration.
  */
 class XmlConfiguration extends AbstractFileConfiguration
 {
     /**
-     * @param  DefaultConfiguration $conf
+     * @param DefaultConfiguration $conf
      * @param $file
+     *
      * @return mixed|void
      */
     public function extract(DefaultConfiguration &$conf, $file)

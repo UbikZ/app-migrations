@@ -12,8 +12,7 @@ use Galilee\Migrations\Tools\OutputWriter;
 use Galilee\Migrations\Version;
 
 /**
- * Class Configuration
- * @package Galilee\Migrations\Configuration
+ * Class Configuration.
  */
 class DefaultConfiguration
 {
@@ -49,6 +48,7 @@ class DefaultConfiguration
     /**
      * @param $filepath
      * @param $type
+     *
      * @throws \Galilee\Migrations\Exceptions\InvalidAdapterFileException
      */
     public function importConfiguration($filepath, $type)
@@ -73,7 +73,9 @@ class DefaultConfiguration
 
     /**
      * @param $path
+     *
      * @return array
+     *
      * @throws InvalidMigrationsClassException
      */
     public function registerMigrationsFromDirectory($path)
@@ -99,7 +101,9 @@ class DefaultConfiguration
     /**
      * @param $version
      * @param $class
+     *
      * @return Version|string
+     *
      * @throws InvalidMigrationsVersionException
      */
     public function registerMigration($version, $class)
@@ -118,6 +122,7 @@ class DefaultConfiguration
 
     /**
      * @param $version
+     *
      * @return bool
      */
     public function hasVersion($version)
@@ -126,8 +131,10 @@ class DefaultConfiguration
     }
 
     /**
-     * @param  Version                        $version
+     * @param Version $version
+     *
      * @return bool
+     *
      * @throws InvalidMigrationsFileException
      */
     public function hasVersionMigrated(Version $version)
@@ -138,7 +145,8 @@ class DefaultConfiguration
     }
 
     /**
-     * @param  Version                        $version
+     * @param Version $version
+     *
      * @throws InvalidMigrationsFileException
      */
     public function addMigrationVersion(Version $version)
@@ -150,7 +158,8 @@ class DefaultConfiguration
     }
 
     /**
-     * @param  Version                           $version
+     * @param Version $version
+     *
      * @throws InvalidMigrationsFileException
      * @throws InvalidMigrationsVersionException
      */
@@ -167,6 +176,7 @@ class DefaultConfiguration
 
     /**
      * @return mixed
+     *
      * @throws InvalidMigrationsFileException
      */
     public function getMigratedVersions()
@@ -193,6 +203,7 @@ class DefaultConfiguration
 
     /**
      * @return string
+     *
      * @throws InvalidMigrationsFileException
      */
     public function getCurrentVersion()
@@ -245,6 +256,7 @@ class DefaultConfiguration
     /**
      * @param $version
      * @param $delta
+     *
      * @return null|string
      */
     private function getRelativeVersion($version, $delta)
@@ -253,7 +265,7 @@ class DefaultConfiguration
         array_unshift($version, 0);
         $offset = array_search($version, $versions);
         if ($offset === false || !isset($versions[$offset + $delta])) {
-            return null;
+            return;
         }
 
         return (string) $versions[$offset + $delta];
@@ -262,6 +274,7 @@ class DefaultConfiguration
     /**
      * @param $direction
      * @param $to
+     *
      * @return array
      */
     public function getMigrationsToExecute($direction, $to)
@@ -296,26 +309,30 @@ class DefaultConfiguration
      * @param Version $version
      * @param $to
      * @param $migrated
+     *
      * @return bool
      */
     private function shouldExecuteMigration($direction, Version $version, $to, $migrated)
     {
         if ($direction === 'down') {
-            if ( ! in_array($version->getVersion(), $migrated)) {
+            if (! in_array($version->getVersion(), $migrated)) {
                 return false;
             }
+
             return $version->getVersion() > $to;
         }
         if ($direction === 'up') {
             if (in_array($version->getVersion(), $migrated)) {
                 return false;
             }
+
             return $version->getVersion() <= $to;
         }
     }
 
     /**
      * @param $alias
+     *
      * @return null|string
      */
     public function resolveVersionAlias($alias)
@@ -335,7 +352,7 @@ class DefaultConfiguration
             case 'latest':
                 return $this->getLatestVersion();
             default:
-                return null;
+                return;
         }
     }
 
@@ -347,22 +364,37 @@ class DefaultConfiguration
      */
     public function createMigrationFile()
     {
-        $created = false;
         $this->validate();
 
-        if (!$this->isMigrationsFileCreated()) {
+        if ($this->isMigrationsFileCreated()) {
+            return false;
+        }
+
+        if (!$this->existsMigrationFile()) {
             if (false === @touch($this->getMigrationsDirectory().'/'.$this->getMigrationsFileName())) {
                 throw new InvalidMigrationsFileException('Cannot create migrations file.');
             }
-            $created = true;
-            $this->setMigrationsFileCreated($created);
+            $this->setMigrationsFileCreated(true);
+
+            return $this->isMigrationsFileCreated();
         }
 
-        return $created;
+        $this->setMigrationsFileCreated(true);
+
+        return false;
+    }
+
+    /**
+     * @return bool
+     */
+    private function existsMigrationFile()
+    {
+        return file_exists($this->getMigrationsDirectory().'/'.$this->getMigrationsFileName());
     }
 
     /**
      * @return mixed
+     *
      * @throws InvalidMigrationsFileException
      */
     private function readMigrationFile()
@@ -374,15 +406,16 @@ class DefaultConfiguration
         if (false === ($fileContent = @file_get_contents($filePath))) {
             throw new InvalidMigrationsFileException('Cannot read `'.$filePath.'` file migrations.');
         }
-        if (false === ($decodedContent = @json_decode($filePath, true))) {
+        if (false === ($decodedContent = @json_decode($fileContent, true))) {
             throw new InvalidMigrationsFileException('Cannot parse `'.$filePath.'` file migrations.');
         }
 
-        return is_array($decodedContent) ?: array();
+        return is_array($decodedContent) ? $decodedContent : array();
     }
 
     /**
-     * @param  array                          $versions
+     * @param array $versions
+     *
      * @throws InvalidMigrationsFileException
      */
     private function writeMigrationFile(array $versions)

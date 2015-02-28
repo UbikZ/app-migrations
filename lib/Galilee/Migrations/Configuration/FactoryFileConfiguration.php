@@ -11,7 +11,9 @@ class FactoryFileConfiguration
 
     /**
      * @param $type
+     *
      * @return InterfaceFileConfiguration
+     *
      * @throws InvalidAdapterFileException
      */
     public static function create($type)

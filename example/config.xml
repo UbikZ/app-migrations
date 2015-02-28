@@ -4,5 +4,5 @@
         <name>mon_fichier_versions</name>
     </file>
     <migrations-namespace>caca</migrations-namespace>
-    <migrations-directory>./build/</migrations-directory>
+    <migrations-directory>./build</migrations-directory>
 </xml>

@@ -35,9 +35,10 @@ class Version
     private $state = self::STATE_NONE;
 
     /**
-     * @param  DefaultConfiguration            $configuration
+     * @param DefaultConfiguration $configuration
      * @param $version
      * @param $class
+     *
      * @throws InvalidMigrationsClassException
      */
     public function __construct(DefaultConfiguration $configuration, $version, $class)
@@ -92,6 +93,7 @@ class Version
 
     /**
      * @param $direction
+     *
      * @throws \Exception
      */
     public function execute($direction)
@@ -99,11 +101,11 @@ class Version
         try {
             $start = microtime(true);
             $this->setState(self::STATE_PRE);
-            $this->getMigration()->{'pre' . ucfirst($direction)}();
+            $this->getMigration()->{'pre'.ucfirst($direction)}();
             if ($direction === 'up') {
-                $this->getOutputWriter()->write("\n" . sprintf('  <info>++</info> migrating <comment>%s</comment>', $this->version) . "\n");
+                $this->getOutputWriter()->write("\n".sprintf('  <info>++</info> migrating <comment>%s</comment>', $this->version)."\n");
             } else {
-                $this->getOutputWriter()->write("\n" . sprintf('  <info>--</info> reverting <comment>%s</comment>', $this->version) . "\n");
+                $this->getOutputWriter()->write("\n".sprintf('  <info>--</info> reverting <comment>%s</comment>', $this->version)."\n");
             }
             $this->setState(self::STATE_EXEC);
             $this->getMigration()->$direction();
@@ -115,7 +117,7 @@ class Version
             }
 
             $this->setState(self::STATE_POST);
-            $this->getMigration()->{'post' . ucfirst($direction)}();
+            $this->getMigration()->{'post'.ucfirst($direction)}();
             $end = microtime(true);
             $this->setExecuteTime(round($end - $start, 2));
             if ($direction === 'up') {
@@ -124,6 +126,7 @@ class Version
                 $this->getOutputWriter()->write(sprintf("\n  <info>--</info> reverted (%ss)", $this->getExecuteTime()));
             }
             $this->setState(self::STATE_NONE);
+
             return true;
         } catch (\Exception $e) {
             $this->getOutputWriter()->write(sprintf(
@@ -253,6 +256,7 @@ class Version
 
     /**
      * @param $class
+     *
      * @throws InvalidMigrationsClassException
      */
     public function setClass($class)

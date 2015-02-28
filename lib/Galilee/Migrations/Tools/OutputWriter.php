@@ -3,8 +3,7 @@
 namespace Galilee\Migrations\Tools;
 
 /**
- * Class OutputWriter
- * @package Galilee\Migrations\Tools
+ * Class OutputWriter.
  */
 class OutputWriter
 {

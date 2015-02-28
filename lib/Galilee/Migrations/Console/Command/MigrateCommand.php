@@ -2,7 +2,6 @@
 
 namespace Galilee\Migrations\Console\Command;
 
-use Galilee\Migrations\Configuration\DefaultConfiguration;
 use Galilee\Migrations\Exceptions\InvalidMigrationsClassException;
 use Galilee\Migrations\Exceptions\InvalidMigrationsDirectoryException;
 use Galilee\Migrations\Exceptions\InvalidMigrationsFileException;
@@ -12,8 +11,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class GenerateCommand
- * @package Galilee\Migrations\Console\Command
+ * Class GenerateCommand.
  */
 class MigrateCommand extends AbstractCommand
 {
@@ -28,9 +26,11 @@ class MigrateCommand extends AbstractCommand
     }
 
     /**
-     * @param  InputInterface                                                   $input
-     * @param  OutputInterface                                                  $output
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
      * @return int|null|void
+     *
      * @throws InvalidMigrationsClassException
      * @throws InvalidMigrationsDirectoryException
      * @throws InvalidMigrationsFileException
@@ -40,7 +40,6 @@ class MigrateCommand extends AbstractCommand
     {
         $configuration = $this->getMigrationConfiguration($input, $output);
         $migration = new Migration($configuration);
-
         $this->outputHeader($configuration, $output);
         $noInteraction = !$input->isInteractive();
 
@@ -59,27 +58,28 @@ class MigrateCommand extends AbstractCommand
                     $output->writeln('<error>Already at latest version.</error>');
                     break;
                 default:
-                    $output->writeln('<error>Unknown version: ' . $output->getFormatter()->escape($versionAlias) . '</error>');
+                    $output->writeln('<error>Unknown version: '.$output->getFormatter()->escape($versionAlias).'</error>');
             }
+
             return 1;
         }
 
         if ($executedUnavailableMigrations) {
             $output->writeln(sprintf('<error>WARNING! You have %s previously executed migrations in the database that are not registered migrations.</error>', count($executedUnavailableMigrations)));
             foreach ($executedUnavailableMigrations as $executedUnavailableMigration) {
-                $output->writeln('    <comment>>></comment> ' . $configuration->formatVersion($executedUnavailableMigration) . ' (<comment>' . $executedUnavailableMigration . '</comment>)');
+                $output->writeln('    <comment>>></comment> '.$configuration->formatVersion($executedUnavailableMigration).' (<comment>'.$executedUnavailableMigration.'</comment>)');
             }
             if (!$noInteraction) {
                 $confirmation = $this->getHelper('dialog')->askConfirmation($output, '<question>Are you sure you wish to continue? (y/n)</question>', false);
                 if (! $confirmation) {
                     $output->writeln('<error>Migration cancelled!</error>');
+
                     return 1;
                 }
             }
         }
 
-        $sql = $migration->migrate($version);
-        if (! $sql) {
+        if (!$migration->migrate($version)) {
             $output->writeln('<comment>No migrations to execute.</comment>');
         }
     }

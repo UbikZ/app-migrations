@@ -10,8 +10,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * Class GenerateCommand
- * @package Galilee\Migrations\Console\Command
+ * Class GenerateCommand.
  */
 class GenerateCommand extends AbstractCommand
 {
@@ -24,9 +23,11 @@ class GenerateCommand extends AbstractCommand
     }
 
     /**
-     * @param  InputInterface                                                   $input
-     * @param  OutputInterface                                                  $output
+     * @param InputInterface  $input
+     * @param OutputInterface $output
+     *
      * @return int|null|void
+     *
      * @throws InvalidMigrationsClassException
      * @throws InvalidMigrationsDirectoryException
      * @throws InvalidMigrationsFileException
@@ -41,10 +42,12 @@ class GenerateCommand extends AbstractCommand
     }
 
     /**
-     * @param  DefaultConfiguration                $configuration
+     * @param DefaultConfiguration $configuration
      * @param $version
-     * @param  array                               $uses
+     * @param array                $uses
+     *
      * @return string
+     *
      * @throws InvalidMigrationsClassException
      * @throws InvalidMigrationsDirectoryException
      * @throws InvalidMigrationsFileException

@@ -3,8 +3,7 @@
 namespace Galilee\Migrations\Exceptions;
 
 /**
- * Class InvalidConfigurationFileException
- * @package Galilee\Migrations\Exceptions
+ * Class InvalidConfigurationFileException.
  */
 class InvalidConfigurationFileException extends \Exception
 {

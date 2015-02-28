@@ -3,8 +3,7 @@
 namespace Galilee\Migrations\Tests;
 
 /**
- * Class SilexModulesSkeletonExempleTest
- * @package Galilee\Migrations\Tests
+ * Class SilexModulesSkeletonExempleTest.
  */
 class ExampleTest extends \PHPUnit_Framework_TestCase
 {
