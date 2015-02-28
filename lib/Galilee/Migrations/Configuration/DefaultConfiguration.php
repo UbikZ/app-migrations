@@ -194,7 +194,7 @@ class DefaultConfiguration
         $availableVersion = array();
         if (is_array($this->getMigrationsList())) {
             foreach ($this->getMigrationsList() as $migration) {
-                $availableVersion[] = $migration->getVersion();
+                $availableVersion[] = intval($migration->getVersion());
             }
         }
 
@@ -221,6 +221,22 @@ class DefaultConfiguration
         $intersect = count($intersect) > 0 ? $intersect : $versions;
 
         return (is_array($intersect) && count($intersect) > 0) ? sprintf('%s', max($intersect)) : '0';
+    }
+
+    /**
+     * @param $version
+     * @return string
+     */
+    public function formatVersion($version)
+    {
+        return sprintf('%s-%s-%s %s:%s:%s',
+            substr($version, 0, 4),
+            substr($version, 4, 2),
+            substr($version, 6, 2),
+            substr($version, 8, 2),
+            substr($version, 10, 2),
+            substr($version, 12, 2)
+        );
     }
 
     /**

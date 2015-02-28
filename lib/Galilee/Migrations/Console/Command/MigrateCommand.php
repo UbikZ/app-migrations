@@ -45,7 +45,7 @@ class MigrateCommand extends AbstractCommand
 
         $executedMigrations = $configuration->getMigratedVersions();
         $availableMigrations = $configuration->getAvailableVersions();
-        $executedUnavailableMigrations = array_diff($executedMigrations, $availableMigrations);
+        $migrationsToExecute = array_diff($availableMigrations, $executedMigrations);
 
         $versionAlias = $input->getArgument('version');
         $version = $configuration->resolveVersionAlias($versionAlias);
@@ -63,10 +63,9 @@ class MigrateCommand extends AbstractCommand
 
             return 1;
         }
-
-        if ($executedUnavailableMigrations) {
-            $output->writeln(sprintf('<error>WARNING! You have %s previously executed migrations in the database that are not registered migrations.</error>', count($executedUnavailableMigrations)));
-            foreach ($executedUnavailableMigrations as $executedUnavailableMigration) {
+        if ($migrationsToExecute) {
+            $output->writeln(sprintf('<error>WARNING! You have %s migrations that are not registered migrations.</error>', count($migrationsToExecute)));
+            foreach ($migrationsToExecute as $executedUnavailableMigration) {
                 $output->writeln('    <comment>>></comment> '.$configuration->formatVersion($executedUnavailableMigration).' (<comment>'.$executedUnavailableMigration.'</comment>)');
             }
             if (!$noInteraction) {
