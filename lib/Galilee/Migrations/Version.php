@@ -4,7 +4,6 @@ namespace Galilee\Migrations;
 
 use Galilee\Migrations\Configuration\DefaultConfiguration;
 use Galilee\Migrations\Exceptions\InvalidMigrationsClassException;
-use Galilee\Migrations\Tools\OutputWriter;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Version
@@ -16,9 +15,6 @@ class Version
 
     /** @var  DefaultConfiguration */
     private $configuration;
-
-    /** @var  OutputWriter */
-    private $outputWriter;
 
     /** @var  int */
     private $version;
@@ -45,7 +41,6 @@ class Version
     public function __construct(DefaultConfiguration $configuration, $version, $class)
     {
         $this->setConfiguration($configuration);
-        $this->setOutputWriter($configuration->getOutputWriter());
         $this->setClass($class);
         $this->setVersion($version);
         $this->setMigrationByClass($this->getClass());
@@ -198,22 +193,6 @@ class Version
     public function setExecuteTime($executeTime)
     {
         $this->executeTime = $executeTime;
-    }
-
-    /**
-     * @return OutputWriter
-     */
-    public function getOutputWriter()
-    {
-        return $this->outputWriter;
-    }
-
-    /**
-     * @param OutputWriter $outputWriter
-     */
-    public function setOutputWriter($outputWriter)
-    {
-        $this->outputWriter = $outputWriter;
     }
 
     /**

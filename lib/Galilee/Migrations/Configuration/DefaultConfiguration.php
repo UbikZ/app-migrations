@@ -8,7 +8,6 @@ use Galilee\Migrations\Exceptions\InvalidMigrationsDirectoryException;
 use Galilee\Migrations\Exceptions\InvalidMigrationsFileException;
 use Galilee\Migrations\Exceptions\InvalidMigrationsNamespaceException;
 use Galilee\Migrations\Exceptions\InvalidMigrationsVersionException;
-use Galilee\Migrations\Tools\OutputWriter;
 use Galilee\Migrations\Version;
 
 /**
@@ -18,9 +17,6 @@ class DefaultConfiguration
 {
     /** @var  string */
     private $name;
-
-    /** @var  OutputWriter */
-    private $outputWriter;
 
     /** @var bool  */
     private $migrationsFileCreated = false;
@@ -36,14 +32,6 @@ class DefaultConfiguration
 
     /** @var array */
     private $migrationsList;
-
-    /**
-     * @param OutputWriter $outputWriter
-     */
-    public function __construct(OutputWriter $outputWriter = null)
-    {
-        $this->setOutputWriter((null === $outputWriter) ? new OutputWriter() : $outputWriter);
-    }
 
     /**
      * @param $filepath
@@ -546,21 +534,5 @@ class DefaultConfiguration
     public function setName($name)
     {
         $this->name = $name;
-    }
-
-    /**
-     * @return OutputWriter
-     */
-    public function getOutputWriter()
-    {
-        return $this->outputWriter;
-    }
-
-    /**
-     * @param OutputWriter $outputWriter
-     */
-    public function setOutputWriter($outputWriter)
-    {
-        $this->outputWriter = $outputWriter;
     }
 }

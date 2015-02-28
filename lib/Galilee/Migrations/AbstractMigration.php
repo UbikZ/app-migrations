@@ -10,16 +10,12 @@ abstract class AbstractMigration
     /** @var  DefaultConfiguration */
     private $configuration;
 
-    /** @var  OutputWriter */
-    private $outputWriter;
-
     /** @var Version */
     protected $version;
 
     public function __construct(Version $version)
     {
         $this->setConfiguration($version->getConfiguration());
-        $this->setOutputWriter($this->getConfiguration()->getOutputWriter());
         $this->setVersion($version);
     }
 
@@ -32,11 +28,6 @@ abstract class AbstractMigration
      * @return mixed
      */
     abstract public function down(/* Mon ORM */);
-
-    protected function write($message)
-    {
-        $this->getOutputWriter()->write($message);
-    }
 
     public function preUp(/* Mon ORM */)
     {
@@ -72,22 +63,6 @@ abstract class AbstractMigration
     public function setConfiguration($configuration)
     {
         $this->configuration = $configuration;
-    }
-
-    /**
-     * @return OutputWriter
-     */
-    public function getOutputWriter()
-    {
-        return $this->outputWriter;
-    }
-
-    /**
-     * @param OutputWriter $outputWriter
-     */
-    public function setOutputWriter($outputWriter)
-    {
-        $this->outputWriter = $outputWriter;
     }
 
     /**
