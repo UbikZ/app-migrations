@@ -90,7 +90,9 @@ class Version
     /**
      * @param $direction
      * @param OutputInterface $output
+     *
      * @return bool
+     *
      * @throws \Exception
      */
     public function execute($direction, OutputInterface $output)

@@ -3,7 +3,6 @@
 namespace Galilee\Migrations;
 
 use Galilee\Migrations\Configuration\DefaultConfiguration;
-use Galilee\Migrations\Tools\OutputWriter;
 
 abstract class AbstractMigration
 {

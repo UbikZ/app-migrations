@@ -213,6 +213,7 @@ class DefaultConfiguration
 
     /**
      * @param $version
+     *
      * @return string
      */
     public function formatVersion($version)
@@ -362,6 +363,7 @@ class DefaultConfiguration
 
     /**
      * @return bool
+     *
      * @throws InvalidMigrationsDirectoryException
      * @throws InvalidMigrationsFileException
      * @throws InvalidMigrationsNamespaceException

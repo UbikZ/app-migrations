@@ -4,7 +4,6 @@ namespace Galilee\Migrations;
 
 use Galilee\Migrations\Configuration\DefaultConfiguration;
 use Galilee\Migrations\Exceptions\InvalidMigrationsVersionException;
-use Galilee\Migrations\Tools\OutputWriter;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Migration
@@ -18,9 +17,11 @@ class Migration
     }
 
     /**
-     * @param null $to
+     * @param null            $to
      * @param OutputInterface $output
+     *
      * @return array
+     *
      * @throws InvalidMigrationsVersionException
      * @throws \Exception
      */
