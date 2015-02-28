@@ -51,10 +51,10 @@ class MigrateCommand extends AbstractCommand
         $version = $configuration->resolveVersionAlias($versionAlias);
         if ($version === null) {
             switch ($versionAlias) {
-                case 'prev':
+                case 'down':
                     $output->writeln('<error>Already at first version.</error>');
                     break;
-                case 'next':
+                case 'up':
                     $output->writeln('<error>Already at latest version.</error>');
                     break;
                 default:
@@ -78,7 +78,7 @@ class MigrateCommand extends AbstractCommand
             }
         }
 
-        if (!$migration->migrate($version)) {
+        if (!$migration->migrate($version, $output)) {
             $output->writeln('<comment>No migrations to execute.</comment>');
         }
     }

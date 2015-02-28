@@ -278,7 +278,7 @@ class DefaultConfiguration
     private function getRelativeVersion($version, $delta)
     {
         $versions = array_keys($this->getMigrationsList());
-        array_unshift($version, 0);
+        array_unshift($versions, 0);
         $offset = array_search($version, $versions);
         if ($offset === false || !isset($versions[$offset + $delta])) {
             return;
@@ -361,9 +361,9 @@ class DefaultConfiguration
                 return '0';
             case 'current':
                 return $this->getCurrentVersion();
-            case 'prev':
+            case 'down':
                 return $this->getPrevVersion();
-            case 'next':
+            case 'up':
                 return $this->getNextVersion();
             case 'latest':
                 return $this->getLatestVersion();

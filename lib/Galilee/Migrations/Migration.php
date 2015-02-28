@@ -5,6 +5,7 @@ namespace Galilee\Migrations;
 use Galilee\Migrations\Configuration\DefaultConfiguration;
 use Galilee\Migrations\Exceptions\InvalidMigrationsVersionException;
 use Galilee\Migrations\Tools\OutputWriter;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Migration
 {
@@ -20,7 +21,14 @@ class Migration
         $this->setConfiguration($configuration);
     }
 
-    public function migrate($to = null)
+    /**
+     * @param null $to
+     * @param OutputInterface $output
+     * @return array
+     * @throws InvalidMigrationsVersionException
+     * @throws \Exception
+     */
+    public function migrate($to = null, OutputInterface $output)
     {
         if ($to === null) {
             $to = $this->configuration->getLatestVersion();
@@ -39,24 +47,23 @@ class Migration
             return array();
         }
 
-        $this->outputWriter->write(sprintf('Migrating <info>%s</info> to <comment>%s</comment> from <comment>%s</comment>', $direction, $to, $from));
+        $output->writeln(sprintf('Migrating <info>%s</info> to <comment>%s</comment> from <comment>%s</comment>', $direction, $to, $from));
         if (empty($migrationsToExecute)) {
             throw new InvalidMigrationsVersionException('No migration to execute.');
         }
-        $sql = array();
+        $requests = array();
         $time = 0;
         /** @var Version $version */
         foreach ($migrationsToExecute as $version) {
-            $versionSql = $version->execute($direction);
-            $sql[$version->getVersion()] = $versionSql;
+            $request = $version->execute($direction, $output);
+            $requests[$version->getVersion()] = $request;
             $time += $version->getExecuteTime();
         }
-        $this->outputWriter->write("\n  <comment>------------------------</comment>\n");
-        $this->outputWriter->write(sprintf("  <info>++</info> finished in %s", $time));
-        $this->outputWriter->write(sprintf("  <info>++</info> %s migrations executed", count($migrationsToExecute)));
-        $this->outputWriter->write(sprintf("  <info>++</info> %s sql queries", count($sql, true) - count($sql)));
+        $output->writeln("\n  <comment>------------------------</comment>\n");
+        $output->writeln(sprintf("  <info>++</info> finished in %s", $time));
+        $output->writeln(sprintf("  <info>++</info> %s migrations executed", count($migrationsToExecute)));
 
-        return $sql;
+        return $requests;
     }
 
     /*

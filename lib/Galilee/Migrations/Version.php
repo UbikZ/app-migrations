@@ -5,6 +5,7 @@ namespace Galilee\Migrations;
 use Galilee\Migrations\Configuration\DefaultConfiguration;
 use Galilee\Migrations\Exceptions\InvalidMigrationsClassException;
 use Galilee\Migrations\Tools\OutputWriter;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Version
 {
@@ -71,7 +72,7 @@ class Version
      */
     public function markNotMigrated()
     {
-        $this->getConfiguration()->addMigrationVersion($this);
+        $this->getConfiguration()->removeMigrationVersion($this);
     }
 
     /**
@@ -93,23 +94,24 @@ class Version
 
     /**
      * @param $direction
-     *
+     * @param OutputInterface $output
+     * @return bool
      * @throws \Exception
      */
-    public function execute($direction)
+    public function execute($direction, OutputInterface $output)
     {
         try {
             $start = microtime(true);
             $this->setState(self::STATE_PRE);
             $this->getMigration()->{'pre'.ucfirst($direction)}();
             if ($direction === 'up') {
-                $this->getOutputWriter()->write("\n".sprintf('  <info>++</info> migrating <comment>%s</comment>', $this->version)."\n");
+                $output->writeln("\n".sprintf('  <info>++</info> migrating <comment>%s</comment>', $this->version)."\n");
             } else {
-                $this->getOutputWriter()->write("\n".sprintf('  <info>--</info> reverting <comment>%s</comment>', $this->version)."\n");
+                $output->writeln("\n".sprintf('  <info>--</info> reverting <comment>%s</comment>', $this->version)."\n");
             }
             $this->setState(self::STATE_EXEC);
             $this->getMigration()->$direction();
-            $this->getOutputWriter()->write('    <comment>-></comment> Executing...');
+            $output->writeln('    <comment>-></comment> Executing...');
             if ($direction === 'up') {
                 $this->markMigrated();
             } else {
@@ -121,15 +123,15 @@ class Version
             $end = microtime(true);
             $this->setExecuteTime(round($end - $start, 2));
             if ($direction === 'up') {
-                $this->getOutputWriter()->write(sprintf("\n  <info>++</info> migrated (%ss)", $this->getExecuteTime()));
+                $output->writeln(sprintf("\n  <info>++</info> migrated (%ss)", $this->getExecuteTime()));
             } else {
-                $this->getOutputWriter()->write(sprintf("\n  <info>--</info> reverted (%ss)", $this->getExecuteTime()));
+                $output->writeln(sprintf("\n  <info>--</info> reverted (%ss)", $this->getExecuteTime()));
             }
             $this->setState(self::STATE_NONE);
 
             return true;
         } catch (\Exception $e) {
-            $this->getOutputWriter()->write(sprintf(
+            $output->writeln(sprintf(
                 '<error>Migration %s failed during %s. Error %s</error>',
                 $this->version, $this->getExecutionState(), $e->getMessage()
             ));
