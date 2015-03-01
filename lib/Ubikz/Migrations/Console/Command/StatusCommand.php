@@ -58,7 +58,7 @@ EOT
         $output->writeln("\n <info>==</info> Configuration\n");
         $info = array(
             'Name'                              => $configuration->getName() ? $configuration->getName() : 'Application Migrations',
-            'Version Table Name'                => $configuration->getMigrationsFileName(),
+            'Version File Name'                => $configuration->getMigrationsFileName(),
             'Migrations Namespace'              => $configuration->getMigrationsNamespace(),
             'Migrations Directory'              => $configuration->getMigrationsDirectory(),
             'Current Version'                   => $currentVersionFormatted,
