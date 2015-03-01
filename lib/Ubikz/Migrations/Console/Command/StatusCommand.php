@@ -30,9 +30,8 @@ EOT
     }
 
     /**
-     * @param InputInterface  $input
+     * @param InputInterface $input
      * @param OutputInterface $output
-     *
      * @throws \Ubikz\Migrations\Exceptions\InvalidConfigurationFileException
      */
     public function execute(InputInterface $input, OutputInterface $output)
