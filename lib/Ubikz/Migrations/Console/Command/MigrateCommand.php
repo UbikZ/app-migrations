@@ -1,11 +1,11 @@
 <?php
 
-namespace Galilee\Migrations\Console\Command;
+namespace Ubikz\Migrations\Console\Command;
 
-use Galilee\Migrations\Exceptions\InvalidMigrationsClassException;
-use Galilee\Migrations\Exceptions\InvalidMigrationsDirectoryException;
-use Galilee\Migrations\Exceptions\InvalidMigrationsFileException;
-use Galilee\Migrations\Migration;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsClassException;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsDirectoryException;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsFileException;
+use Ubikz\Migrations\Migration;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,7 +34,7 @@ class MigrateCommand extends AbstractCommand
      * @throws InvalidMigrationsClassException
      * @throws InvalidMigrationsDirectoryException
      * @throws InvalidMigrationsFileException
-     * @throws \Galilee\Migrations\Exceptions\InvalidConfigurationFileException
+     * @throws \Ubikz\Migrations\Exceptions\InvalidConfigurationFileException
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {

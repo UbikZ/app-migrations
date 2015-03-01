@@ -1,9 +1,9 @@
 <?php
 
-namespace Galilee\Migrations\Configuration;
+namespace Ubikz\Migrations\Configuration;
 
-use Galilee\Migrations\Configuration\Adapters\InterfaceFileConfiguration;
-use Galilee\Migrations\Exceptions\InvalidAdapterFileException;
+use Ubikz\Migrations\Configuration\Adapters\InterfaceFileConfiguration;
+use Ubikz\Migrations\Exceptions\InvalidAdapterFileException;
 
 class FactoryFileConfiguration
 {

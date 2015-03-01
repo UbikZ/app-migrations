@@ -1,9 +1,9 @@
 <?php
 
-namespace Galilee\Migrations\Console\Command;
+namespace Ubikz\Migrations\Console\Command;
 
-use Galilee\Migrations\Configuration\DefaultConfiguration;
-use Galilee\Migrations\Exceptions\InvalidConfigurationFileException;
+use Ubikz\Migrations\Configuration\DefaultConfiguration;
+use Ubikz\Migrations\Exceptions\InvalidConfigurationFileException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

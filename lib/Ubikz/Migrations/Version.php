@@ -1,9 +1,9 @@
 <?php
 
-namespace Galilee\Migrations;
+namespace Ubikz\Migrations;
 
-use Galilee\Migrations\Configuration\DefaultConfiguration;
-use Galilee\Migrations\Exceptions\InvalidMigrationsClassException;
+use Ubikz\Migrations\Configuration\DefaultConfiguration;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsClassException;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Version

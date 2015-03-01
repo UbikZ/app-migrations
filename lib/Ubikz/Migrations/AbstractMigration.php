@@ -1,8 +1,8 @@
 <?php
 
-namespace Galilee\Migrations;
+namespace Ubikz\Migrations;
 
-use Galilee\Migrations\Configuration\DefaultConfiguration;
+use Ubikz\Migrations\Configuration\DefaultConfiguration;
 
 abstract class AbstractMigration
 {

@@ -1,11 +1,11 @@
 <?php
 
-namespace Galilee\Migrations\Console\Command;
+namespace Ubikz\Migrations\Console\Command;
 
-use Galilee\Migrations\Configuration\DefaultConfiguration;
-use Galilee\Migrations\Exceptions\InvalidMigrationsClassException;
-use Galilee\Migrations\Exceptions\InvalidMigrationsDirectoryException;
-use Galilee\Migrations\Exceptions\InvalidMigrationsFileException;
+use Ubikz\Migrations\Configuration\DefaultConfiguration;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsClassException;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsDirectoryException;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsFileException;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -31,7 +31,7 @@ class GenerateCommand extends AbstractCommand
      * @throws InvalidMigrationsClassException
      * @throws InvalidMigrationsDirectoryException
      * @throws InvalidMigrationsFileException
-     * @throws \Galilee\Migrations\Exceptions\InvalidConfigurationFileException
+     * @throws \Ubikz\Migrations\Exceptions\InvalidConfigurationFileException
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {

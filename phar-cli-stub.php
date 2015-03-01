@@ -2,12 +2,12 @@
 
 Phar::mapPhar();
 
-require_once 'phar://'.__FILE__.'/Galilee/Migrations/ClassLoader.php';
+require_once 'phar://'.__FILE__.'/Ubikz/Migrations/ClassLoader.php';
 
-$classLoader = new \Galilee\Migrations\ClassLoader('Symfony', 'phar://'.__FILE__);
+$classLoader = new \Ubikz\Migrations\ClassLoader('Symfony', 'phar://'.__FILE__);
 $classLoader->register();
 
-$classLoader = new \Galilee\Migrations\ClassLoader('Galilee\Migrations', 'phar://'.__FILE__);
+$classLoader = new \Ubikz\Migrations\ClassLoader('Ubikz\Migrations', 'phar://'.__FILE__);
 $classLoader->register();
 
 $helperSet = new \Symfony\Component\Console\Helper\HelperSet();
@@ -16,9 +16,9 @@ $cli = new \Symfony\Component\Console\Application('Application Migrations', '0.0
 $cli->setCatchExceptions(true);
 $cli->setHelperSet($helperSet);
 $cli->addCommands(array(
-    new \Galilee\Migrations\Console\Command\GenerateCommand(),
-    new \Galilee\Migrations\Console\Command\MigrateCommand(),
-    new \Galilee\Migrations\Console\Command\StatusCommand(),
+    new \Ubikz\Migrations\Console\Command\GenerateCommand(),
+    new \Ubikz\Migrations\Console\Command\MigrateCommand(),
+    new \Ubikz\Migrations\Console\Command\StatusCommand(),
 ));
 $cli->run();
 

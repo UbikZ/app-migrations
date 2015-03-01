@@ -17,7 +17,7 @@ $p->setSignatureAlgorithm(Phar::SHA1);
 $p->startBuffering();
 
 $dirs = array(
-    __DIR__.'/lib'                         =>  '/Galilee\/Migrations/',
+    __DIR__.'/lib'                         =>  '/Ubikz\/Migrations/',
     __DIR__.'/vendor/symfony/console'      =>  '/Symfony/',
 );
 

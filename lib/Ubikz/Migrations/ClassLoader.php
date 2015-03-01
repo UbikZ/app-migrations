@@ -1,6 +1,6 @@
 <?php
 
-namespace Galilee\Migrations;
+namespace Ubikz\Migrations;
 
 /**
  * Class ClassLoader.

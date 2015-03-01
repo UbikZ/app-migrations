@@ -1,14 +1,14 @@
 <?php
 
-namespace Galilee\Migrations\Configuration;
+namespace Ubikz\Migrations\Configuration;
 
-use Galilee\Migrations\AbstractMigration;
-use Galilee\Migrations\Exceptions\InvalidMigrationsClassException;
-use Galilee\Migrations\Exceptions\InvalidMigrationsDirectoryException;
-use Galilee\Migrations\Exceptions\InvalidMigrationsFileException;
-use Galilee\Migrations\Exceptions\InvalidMigrationsNamespaceException;
-use Galilee\Migrations\Exceptions\InvalidMigrationsVersionException;
-use Galilee\Migrations\Version;
+use Ubikz\Migrations\AbstractMigration;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsClassException;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsDirectoryException;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsFileException;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsNamespaceException;
+use Ubikz\Migrations\Exceptions\InvalidMigrationsVersionException;
+use Ubikz\Migrations\Version;
 
 /**
  * Class Configuration.
@@ -37,7 +37,7 @@ class DefaultConfiguration
      * @param $filepath
      * @param $type
      *
-     * @throws \Galilee\Migrations\Exceptions\InvalidAdapterFileException
+     * @throws \Ubikz\Migrations\Exceptions\InvalidAdapterFileException
      */
     public function importConfiguration($filepath, $type)
     {

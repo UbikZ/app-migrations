@@ -1,6 +1,6 @@
 <?php
 
-namespace Galilee\Migrations\Tests;
+namespace Ubikz\Migrations\Tests;
 
 /**
  * Class SilexModulesSkeletonExempleTest.

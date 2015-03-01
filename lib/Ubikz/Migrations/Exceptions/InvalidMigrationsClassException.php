@@ -1,6 +1,6 @@
 <?php
 
-namespace Galilee\Migrations\Exceptions;
+namespace Ubikz\Migrations\Exceptions;
 
 /**
  * Class InvalidMigrationsClassException.

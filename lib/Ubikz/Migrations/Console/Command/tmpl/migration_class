@@ -1,7 +1,7 @@
 <?php
     namespace <namespace>;
 
-    use Galilee\Migrations\AbstractMigration;
+    use Ubikz\Migrations\AbstractMigration;
     <uses>
 
     /**

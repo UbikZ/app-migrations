@@ -1,8 +1,8 @@
 <?php
 
-namespace Galilee\Migrations\Configuration\Adapters;
+namespace Ubikz\Migrations\Configuration\Adapters;
 
-use Galilee\Migrations\Configuration\DefaultConfiguration;
+use Ubikz\Migrations\Configuration\DefaultConfiguration;
 
 /**
  * Class XmlConfiguration.

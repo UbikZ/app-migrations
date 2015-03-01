@@ -1,9 +1,9 @@
 <?php
 
-namespace Galilee\Migrations\Configuration\Adapters;
+namespace Ubikz\Migrations\Configuration\Adapters;
 
-use Galilee\Migrations\Configuration\DefaultConfiguration;
-use Galilee\Migrations\Exceptions\InvalidConfigurationFileException;
+use Ubikz\Migrations\Configuration\DefaultConfiguration;
+use Ubikz\Migrations\Exceptions\InvalidConfigurationFileException;
 
 abstract class AbstractFileConfiguration implements InterfaceFileConfiguration
 {
