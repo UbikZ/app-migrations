@@ -2,11 +2,7 @@
 
 namespace Ubikz\Migrations\Console\Command;
 
-use Ubikz\Migrations\Exceptions\InvalidMigrationsClassException;
-use Ubikz\Migrations\Exceptions\InvalidMigrationsDirectoryException;
-use Ubikz\Migrations\Exceptions\InvalidMigrationsFileException;
 use Ubikz\Migrations\Migration;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -34,8 +30,9 @@ EOT
     }
 
     /**
-     * @param InputInterface $input
+     * @param InputInterface  $input
      * @param OutputInterface $output
+     *
      * @throws \Ubikz\Migrations\Exceptions\InvalidConfigurationFileException
      */
     public function execute(InputInterface $input, OutputInterface $output)
@@ -43,13 +40,13 @@ EOT
         $configuration = $this->getMigrationConfiguration($input, $output);
         $currentVersion = $configuration->getCurrentVersion();
         if ($currentVersion) {
-            $currentVersionFormatted = $configuration->formatVersion($currentVersion) . ' (<comment>'.$currentVersion.'</comment>)';
+            $currentVersionFormatted = $configuration->formatVersion($currentVersion).' (<comment>'.$currentVersion.'</comment>)';
         } else {
             $currentVersionFormatted = 0;
         }
         $latestVersion = $configuration->getLatestVersion();
         if ($latestVersion) {
-            $latestVersionFormatted = $configuration->formatVersion($latestVersion) . ' (<comment>'.$latestVersion.'</comment>)';
+            $latestVersionFormatted = $configuration->formatVersion($latestVersion).' (<comment>'.$latestVersion.'</comment>)';
         } else {
             $latestVersionFormatted = 0;
         }
@@ -69,10 +66,10 @@ EOT
             'Executed Migrations'               => count($executedMigrations),
             'Executed Unavailable Migrations'   => $numExecutedUnavailableMigrations > 0 ? '<error>'.$numExecutedUnavailableMigrations.'</error>' : 0,
             'Available Migrations'              => count($availableMigrations),
-            'New Migrations'                    => $newMigrations > 0 ? '<question>' . $newMigrations . '</question>' : 0
+            'New Migrations'                    => $newMigrations > 0 ? '<question>'.$newMigrations.'</question>' : 0,
         );
         foreach ($info as $name => $value) {
-            $output->writeln('    <comment>>></comment> ' . $name . ': ' . str_repeat(' ', 50 - strlen($name)) . $value);
+            $output->writeln('    <comment>>></comment> '.$name.': '.str_repeat(' ', 50 - strlen($name)).$value);
         }
         $showVersions = $input->getOption('show-versions') ? true : false;
         if ($showVersions === true) {
@@ -82,13 +79,13 @@ EOT
                 foreach ($migrations as $version) {
                     $isMigrated = in_array($version->getVersion(), $migratedVersions);
                     $status = $isMigrated ? '<info>migrated</info>' : '<error>not migrated</error>';
-                    $output->writeln('    <comment>>></comment> ' . $configuration->formatVersion($version->getVersion()) . ' (<comment>' . $version->getVersion() . '</comment>)' . str_repeat(' ', 30 - strlen($name)) . $status);
+                    $output->writeln('    <comment>>></comment> '.$configuration->formatVersion($version->getVersion()).' (<comment>'.$version->getVersion().'</comment>)'.str_repeat(' ', 30 - strlen($name)).$status);
                 }
             }
             if ($executedUnavailableMigrations) {
                 $output->writeln("\n <info>==</info> Previously Executed Unavailable Migration Versions\n");
                 foreach ($executedUnavailableMigrations as $executedUnavailableMigration) {
-                    $output->writeln('    <comment>>></comment> ' . $configuration->formatVersion($executedUnavailableMigration) . ' (<comment>' . $executedUnavailableMigration . '</comment>)');
+                    $output->writeln('    <comment>>></comment> '.$configuration->formatVersion($executedUnavailableMigration).' (<comment>'.$executedUnavailableMigration.'</comment>)');
                 }
             }
         }
